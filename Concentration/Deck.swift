@@ -69,10 +69,31 @@ struct Deck{
         var list = cards
         for i in 0..<(list.count-1){
             let j = Int(arc4random_uniform(UInt32(list.count-i)))+i
-            swap(&list[i], &list[j])
+            if i != j{
+                swap(&list[i], &list[j])
+            }
         }
         return Deck(cards: list)
     }
+    
+    func deckOfNumberOfCards(num: Int)->Deck{
+        return Deck(cards: Array(cards[0..<num]))
+    }
+    
+    
+
+    
+    var count:Int{
+        get{return cards.count}
+    }
+    
+    
+    subscript(index: Int) -> Card{
+        get{
+            return cards[index]
+        }
+    }
+    
     
     static func full()->Deck{
         var deck = Deck()
@@ -88,7 +109,9 @@ struct Deck{
 
 
 
-
+func +(deck1: Deck, deck2: Deck)->Deck{
+    return Deck(cards: deck1.cards+deck2.cards)
+}
 
 
 

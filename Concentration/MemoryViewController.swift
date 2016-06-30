@@ -13,6 +13,9 @@ class MemoryViewController :UIViewController {
     private let difficulty : Difficulty
     private var collectionView:UICollectionView!
     private var deck:Deck!
+    private var selectedIndexes = Array<NSIndexPath>()
+    private var numberOfPairs = 0
+    private var score = 0
     
     init(difficulty:Difficulty){
         self.difficulty = difficulty
@@ -34,13 +37,16 @@ class MemoryViewController :UIViewController {
     }
     
     func startup(){
-        deck=createDeck(count: numCardsNeededDifficulty(difficulty))
+        deck=createDeck(numCardsNeededDifficulty(difficulty))
+        for i in 0..<deck.count{
+            print("The card at index [\(i)] is \(deck[i].description)")
+        }
         collectionView.reloadData()
     }
     
-    func createDeck(numCards: Int)->Deck{
+    func createDeck(numCards: Int) -> Deck{
         let fullDeck = Deck.full().shuffled()
-        let halfDeck = Deck.deckOfNumberOfCards(numCards/2)
+        let halfDeck = fullDeck.deckOfNumberOfCards(numCards/2)
         return (halfDeck + halfDeck).shuffled()
     }
     
@@ -67,7 +73,7 @@ private extension MemoryViewController{
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.scrollEnabled=false
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "cardCell")
+        collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "cardCell")
         collectionView.backgroundColor = UIColor.clearColor()
         
         self.view.addSubview(collectionView)
@@ -116,8 +122,12 @@ extension MemoryViewController:UICollectionViewDataSource{
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cardCell", forIndexPath: indexPath)
+        
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cardCell", forIndexPath: indexPath) as! CardCell
         cell.backgroundColor = UIColor.sunflower()
+        let card = deck[indexPath.row]
+        cell.renderCardName(card.description, backImageName: "back")
         return cell
         
     }
@@ -125,13 +135,84 @@ extension MemoryViewController:UICollectionViewDataSource{
 
 //MARK: uicollectionview delegate
 extension MemoryViewController:UICollectionViewDelegate{
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if  selectedIndexes.count==2 || self.selectedIndexes.contains(indexPath){
+            return
+        }
+        self.selectedIndexes.append(indexPath)
         
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CardCell
+        cell.upturn()
+        
+        if selectedIndexes.count<2{
+            return
+        }
+        
+        let card1 = deck[selectedIndexes[0].row]
+        let card2 = deck[selectedIndexes[1].row]
+        
+        if card1 == card2 {
+            numberOfPairs++
+            checkIfFinished()
+            removeCards()
+        } else{
+            score++
+            turnCardsFaceDown()
+        }
     }
 }
 
 
-
+//MARK: actions
+extension MemoryViewController{
+    func checkIfFinished(){
+        if  numberOfPairs == deck.count/2{
+            showFinalPopUp()
+        }
+    }
+    
+    func showFinalPopUp(){
+        var alert = UIAlertController(title: "Great!",
+            message: "You won with score: \(score)!",
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func removeCards(){
+        execAfter(1.0, block: {
+            self.removeCardsAtPlaces(self.selectedIndexes)
+            self.selectedIndexes = Array<NSIndexPath>()
+        })
+    }
+    func removeCardsAtPlaces(places: Array<NSIndexPath>){
+        for index in places{
+            let cardCell = collectionView.cellForItemAtIndexPath(index) as! CardCell
+            cardCell.remove()
+        }
+    }
+    func turnCardsFaceDown(){
+        execAfter(2.0, block: {
+            self.downturnCardsAtPlaces(self.selectedIndexes)
+            self.selectedIndexes = Array<NSIndexPath>()
+        })
+        
+    }
+    func downturnCardsAtPlaces(places: Array<NSIndexPath>){
+        for index in places{
+            let cardcell = collectionView.cellForItemAtIndexPath(index) as! CardCell
+            
+            cardcell.downturn()
+        }
+    }
+    
+    
+}
 
 
 

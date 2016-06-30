@@ -15,6 +15,8 @@
 		B6080F5F1D1BD604000B9FA9 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6080F5E1D1BD604000B9FA9 /* UIColorExtension.swift */; };
 		B60C6F511D2516DD00717B23 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C6F501D2516DD00717B23 /* Deck.swift */; };
 		B60F56E01D1FF6E5003FC24E /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F56DF1D1FF6E5003FC24E /* MemoryViewController.swift */; };
+		B6FC04561D257C1400DC4255 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC04551D257C1400DC4255 /* CardCell.swift */; };
+		B6FC04581D25800900DC4255 /* UIViewController+Add.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC04571D25800900DC4255 /* UIViewController+Add.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		B6080F5E1D1BD604000B9FA9 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		B60C6F501D2516DD00717B23 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		B60F56DF1D1FF6E5003FC24E /* MemoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
+		B6FC04551D257C1400DC4255 /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
+		B6FC04571D25800900DC4255 /* UIViewController+Add.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Add.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				B6080F5E1D1BD604000B9FA9 /* UIColorExtension.swift */,
 				B60F56DF1D1FF6E5003FC24E /* MemoryViewController.swift */,
 				B60C6F501D2516DD00717B23 /* Deck.swift */,
+				B6FC04551D257C1400DC4255 /* CardCell.swift */,
+				B6FC04571D25800900DC4255 /* UIViewController+Add.swift */,
 			);
 			path = Concentration;
 			sourceTree = "<group>";
@@ -148,7 +154,9 @@
 				B60F56E01D1FF6E5003FC24E /* MemoryViewController.swift in Sources */,
 				B60C6F511D2516DD00717B23 /* Deck.swift in Sources */,
 				B6080F4D1D1BC48C000B9FA9 /* AppDelegate.swift in Sources */,
+				B6FC04581D25800900DC4255 /* UIViewController+Add.swift in Sources */,
 				B6080F5F1D1BD604000B9FA9 /* UIColorExtension.swift in Sources */,
+				B6FC04561D257C1400DC4255 /* CardCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
