@@ -90,7 +90,7 @@ private extension MemoryViewController{
     func collectionViewSizeDifficulty(diffculty:Difficulty,space:CGFloat)->(CGFloat,CGFloat){
         let (columns, rows) = sizeDifficulty(diffculty)
         let (cardWidth,cardHeight) = cardSizeDifficulty(diffculty,space: space)
-        let covWidth = columns * (cardWidth + 2*space)
+        let covWidth = columns * (cardWidth + space) + space
         let covHeight = rows * (cardHeight + space)
         return (covWidth, covHeight)
     }
@@ -122,8 +122,6 @@ extension MemoryViewController:UICollectionViewDataSource{
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cardCell", forIndexPath: indexPath) as! CardCell
         cell.backgroundColor = UIColor.sunflower()
         let card = deck[indexPath.row]
@@ -197,7 +195,7 @@ extension MemoryViewController{
         }
     }
     func turnCardsFaceDown(){
-        execAfter(2.0, block: {
+        execAfter(1.0, block: {
             self.downturnCardsAtPlaces(self.selectedIndexes)
             self.selectedIndexes = Array<NSIndexPath>()
         })
